@@ -33,5 +33,6 @@ proguard/
 
 # Maven
 target/
+tmp/
 
 
