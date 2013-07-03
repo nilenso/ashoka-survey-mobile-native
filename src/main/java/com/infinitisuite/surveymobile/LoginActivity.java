@@ -31,6 +31,7 @@ public class LoginActivity extends RoboActivity {
     @InjectView(R.id.login_status) View mLoginStatusView;
     @InjectView(R.id.login_status_message) TextView mLoginStatusMessageView;
     @InjectView(R.id.sign_in_button) View mSignInButton;
+    @InjectView(R.id.errorView) TextView errorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,7 @@ public class LoginActivity extends RoboActivity {
                 @Override
                 public void notifyError(String errorMessage) {
                     showProgress(false);
+                    errorView.setVisibility(View.VISIBLE);
                     mPasswordView.setError("Username or password was wrong.");
                 }
             });

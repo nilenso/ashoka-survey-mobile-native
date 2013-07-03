@@ -1,4 +1,4 @@
-package com.infinitisuite.surveymobile.test.models;
+package com.infinitisuite.surveymobile.models;
 
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
 import com.infinitisuite.surveymobile.models.User;
