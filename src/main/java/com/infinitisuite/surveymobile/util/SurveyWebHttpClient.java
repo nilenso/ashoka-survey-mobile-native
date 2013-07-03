@@ -11,9 +11,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class SurveyWebHttpClient {
-    public static AsyncHttpClient client = new AsyncHttpClient();
+    private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void mock() {
+    public static void makeAllOperationsSynchronous() {
         // Set a custom thread pool so that threaded operations occur synchronously while testing.
         client.setThreadPool(new TestExecutorService(1, 1, 1, TimeUnit.SECONDS, new ArrayBlockingQueue(5)));
     }

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class UserTest {
     @Before
     public void initialize() {
-        SurveyWebHttpClient.mock();
+        SurveyWebHttpClient.makeAllOperationsSynchronous();
     }
 
     @Test
