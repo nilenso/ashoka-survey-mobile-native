@@ -1,4 +1,4 @@
-# Ashoka Survey Mobile Native
+# Ashoka Survey Mobile Native [![Build Status](https://travis-ci.org/nilenso/ashoka-survey-mobile-native.png?branch=master)](https://travis-ci.org/nilenso/ashoka-survey-mobile-native)
 
 A native rewrite of [ashoka-survey-mobile](http://github.com/nilenso/ashoka-survey-mobile), which was written using Titanium.
 
