@@ -13,3 +13,6 @@ before_install:
     - android update sdk --filter platform-tools,android-14,extra-android-support --no-ui --force
 
 script: mvn clean test
+notifications:
+  email:
+    - ashoka-survey@nilenso.com
