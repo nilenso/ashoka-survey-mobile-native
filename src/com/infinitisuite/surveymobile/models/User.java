@@ -19,7 +19,7 @@ public class User {
         params.put("username", username);
         params.put("password", password);
 
-        SurveyWebHttpClient.post("/api/login", params, new AsyncHttpResponseHandler() {
+        new SurveyWebHttpClient().post("/api/login", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String s) {
                 userLoginHandler.notifySuccess();
@@ -27,7 +27,7 @@ public class User {
 
             @Override
             public void onFailure(Throwable throwable, String s) {
-                super.onFailure(throwable, s);
+                userLoginHandler.notifyError(s);
             }
         });
     }

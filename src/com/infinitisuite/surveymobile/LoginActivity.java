@@ -1,11 +1,8 @@
 package com.infinitisuite.surveymobile;
 
-import roboguice.activity.RoboActivity;
-import roboguice.inject.InjectView;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -14,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
