@@ -18,9 +18,6 @@ public class LoginActivity extends RoboActivity {
 
     private LoginPresenter mPresenter;
 
-    private String mEmail;
-    private String mPassword;
-
     @InjectView(R.id.email) EditText mEmailView;
     @InjectView(R.id.password) EditText mPasswordView;
     @InjectView(R.id.login_form) View mLoginFormView;
@@ -32,10 +29,10 @@ public class LoginActivity extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
         LoginView loginView = new LoginView(this, mEmailView, mPasswordView, mLoginFormView, mLoginStatusView, mLoginStatusMessageView, mSignInButtonView, mErrorView);
         mPresenter = new LoginPresenter(loginView);
-
-        setContentView(R.layout.activity_login);
 
         mSignInButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
