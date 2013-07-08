@@ -108,29 +108,7 @@ public class LoginActivity extends RoboActivity {
      * Shows the progress UI and hides the login form.
      */
     private void showProgress(final boolean show) {
-        int shortAnimTime = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
-
-        mLoginStatusView.setVisibility(View.VISIBLE);
-        mLoginStatusView.animate().setDuration(shortAnimTime)
-                .alpha(show ? 1 : 0)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mLoginStatusView.setVisibility(show ? View.VISIBLE
-                                : View.GONE);
-                    }
-                });
-
-        mLoginFormView.setVisibility(View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime)
-                .alpha(show ? 0 : 1)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mLoginFormView.setVisibility(show ? View.GONE
-                                : View.VISIBLE);
-                    }
-                });
+        mLoginFormView.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        mLoginStatusView.setVisibility(show? View.VISIBLE : View.INVISIBLE);
     }
 }

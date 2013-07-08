@@ -1,7 +1,6 @@
 package com.infinitisuite.surveymobile.models;
 
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
-import com.infinitisuite.surveymobile.models.User;
 import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import org.junit.Before;
 import org.junit.Test;

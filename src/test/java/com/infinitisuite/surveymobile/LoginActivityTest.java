@@ -1,24 +1,15 @@
 package com.infinitisuite.surveymobile;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.google.inject.Inject;
-import com.infinitisuite.surveymobile.LoginActivity;
 import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
-import org.junit.runners.JUnit4;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.util.ActivityController;
-import roboguice.inject.InjectResource;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -47,10 +38,9 @@ public class LoginActivityTest {
         Robolectric.addPendingHttpResponse(401, "Unauthorized");
         SurveyWebHttpClient.makeAllOperationsSynchronous();
 
-        email.setText("foo");
+        email.setText("foo@bar.com");
         password.setText("bar");
         loginButton.performClick();
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
         assertThat(errorView.getVisibility()).isEqualTo(View.VISIBLE);
     }
 }
