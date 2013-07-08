@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.infinitisuite.surveymobile.R;
+import com.infinitisuite.surveymobile.presenters.SimpleDialogPresenter;
+import com.infinitisuite.surveymobile.presenters.SimpleDialogView;
 
 public class LoginView implements ILoginView {
 
@@ -78,7 +80,6 @@ public class LoginView implements ILoginView {
 
     @Override
     public void showLoginError() {
-        mErrorView.setVisibility(View.VISIBLE);
-        mPasswordView.setError("Username or password was wrong.");
+        new SimpleDialogPresenter(new SimpleDialogView(mActivity, "Login failed!", "Please check your username and password")).show();
     }
 }
