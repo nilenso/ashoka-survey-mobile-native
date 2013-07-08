@@ -3,5 +3,7 @@
 
     <string name="app_name">SurveyMobile</string>
     <string name="title_survey_detail">Survey Detail</string>
+    <string name="login_failed_alert_title">Login failed!</string>
+    <string name="login_failed_alert_message">Please check your username and password</string>
 
 </resources>

@@ -80,6 +80,6 @@ public class LoginView implements ILoginView {
 
     @Override
     public void showLoginError() {
-        new SimpleDialogPresenter(new SimpleDialogView(mActivity, "Login failed!", "Please check your username and password")).show();
+        new SimpleDialogPresenter(new SimpleDialogView(mActivity, mActivity.getString(R.string.login_failed_alert_title), mActivity.getString(R.string.login_failed_alert_message))).show();
     }
 }
