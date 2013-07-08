@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.infinitisuite.surveymobile.presenters.LoginPresenter;
+import com.infinitisuite.surveymobile.services.UserService;
+import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import com.infinitisuite.surveymobile.views.LoginView;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
@@ -31,8 +33,8 @@ public class LoginActivity extends RoboActivity {
         setContentView(R.layout.activity_login);
 
         LoginView loginView = new LoginView(this, mEmailView, mPasswordView, mLoginFormView, mLoginStatusView, mLoginStatusMessageView, mSignInButtonView);
-        mPresenter = new LoginPresenter(loginView);
 
+        mPresenter = new LoginPresenter(new UserService(new SurveyWebHttpClient()), loginView);
         mSignInButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

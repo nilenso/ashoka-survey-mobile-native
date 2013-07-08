@@ -11,21 +11,26 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class SurveyWebHttpClient {
-    private static AsyncHttpClient client = new AsyncHttpClient();
+    private AsyncHttpClient client;
 
-    public static void makeAllOperationsSynchronous() {
+    public SurveyWebHttpClient() {
+        this.client = new AsyncHttpClient();
+    }
+
+    public void makeAllOperationsSynchronous() {
         // Set a custom thread pool so that threaded operations occur synchronously while testing.
         client.setThreadPool(new TestExecutorService(1, 1, 1, TimeUnit.SECONDS, new ArrayBlockingQueue(5)));
     }
 
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
-    public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
+    // TODO: extract into SurveyWebUri class and remove SurveyWebHttpClient
     private static String getAbsoluteUrl(String pathString) {
        URI baseURI = null;
        URI path = null;

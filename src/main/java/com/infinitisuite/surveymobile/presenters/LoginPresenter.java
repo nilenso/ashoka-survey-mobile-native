@@ -3,12 +3,15 @@ package com.infinitisuite.surveymobile.presenters;
 import android.text.TextUtils;
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
 import com.infinitisuite.surveymobile.models.User;
+import com.infinitisuite.surveymobile.services.IUserService;
 import com.infinitisuite.surveymobile.views.ILoginView;
 
 public class LoginPresenter {
+    private IUserService userService;
     private ILoginView loginView;
 
-    public LoginPresenter(ILoginView loginView) {
+    public LoginPresenter(IUserService userService, ILoginView loginView) {
+        this.userService = userService;
         this.loginView = loginView;
     }
 
@@ -21,11 +24,8 @@ public class LoginPresenter {
     }
 
     private void login() {
-        // Show a progress spinner, and kick off a background task to
-        // perform the user login attempt.
         loginView.showSigningIn();
-
-        new User(loginView.getEmail(), loginView.getPassword()).login(new UserLoginHandler() {
+        userService.login(new User(loginView.getEmail(), loginView.getPassword()), new UserLoginHandler() {
             @Override
             public void notifySuccess() {
                 loginView.hideSigningIn();

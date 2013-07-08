@@ -1,5 +1,6 @@
 package com.infinitisuite.surveymobile.models;
 
+import com.google.inject.Inject;
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
 import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -14,21 +15,11 @@ public class User {
         this.password = password;
     }
 
-    public void login(final UserLoginHandler userLoginHandler) {
-        RequestParams params = new RequestParams();
-        params.put("username", username);
-        params.put("password", password);
+    public String getUsername() {
+        return username;
+    }
 
-        new SurveyWebHttpClient().post("/api/login", params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(String s) {
-                userLoginHandler.notifySuccess();
-            }
-
-            @Override
-            public void onFailure(Throwable throwable, String s) {
-                userLoginHandler.notifyError(s);
-            }
-        });
+    public String getPassword() {
+        return password;
     }
 }

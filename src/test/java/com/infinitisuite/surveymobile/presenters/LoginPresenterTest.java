@@ -1,5 +1,9 @@
 package com.infinitisuite.surveymobile.presenters;
 
+import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
+import com.infinitisuite.surveymobile.models.User;
+import com.infinitisuite.surveymobile.services.IUserService;
+import com.infinitisuite.surveymobile.services.UserService;
 import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import com.infinitisuite.surveymobile.views.ILoginView;
 import org.junit.Before;
@@ -15,12 +19,15 @@ public class LoginPresenterTest {
 
     private LoginPresenter presenter;
     private ILoginView loginViewMock;
+    private IUserService userService;
 
     @Before
     public void setUp() throws Exception {
         loginViewMock = mock(ILoginView.class);
-        presenter = new LoginPresenter(loginViewMock);
-        SurveyWebHttpClient.makeAllOperationsSynchronous();
+        SurveyWebHttpClient client = new SurveyWebHttpClient();
+        client.makeAllOperationsSynchronous();
+        userService = new UserService(client);
+        presenter = new LoginPresenter(userService, loginViewMock);
     }
 
     @Test
