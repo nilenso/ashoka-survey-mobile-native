@@ -24,14 +24,13 @@ public class LoginActivity extends RoboActivity {
     @InjectView(R.id.login_status) View mLoginStatusView;
     @InjectView(R.id.login_status_message) TextView mLoginStatusMessageView;
     @InjectView(R.id.sign_in_button) View mSignInButtonView;
-    @InjectView(R.id.errorView) TextView mErrorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        LoginView loginView = new LoginView(this, mEmailView, mPasswordView, mLoginFormView, mLoginStatusView, mLoginStatusMessageView, mSignInButtonView, mErrorView);
+        LoginView loginView = new LoginView(this, mEmailView, mPasswordView, mLoginFormView, mLoginStatusView, mLoginStatusMessageView, mSignInButtonView);
         mPresenter = new LoginPresenter(loginView);
 
         mSignInButtonView.setOnClickListener(new View.OnClickListener() {

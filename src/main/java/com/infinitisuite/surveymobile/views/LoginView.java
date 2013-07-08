@@ -17,10 +17,9 @@ public class LoginView implements ILoginView {
     private final View mLoginStatusView;
     private final TextView mLoginStatusMessageView;
     private final View mSignInButtonView;
-    private final TextView mErrorView;
 
     // TODO: is there a better way of dealing with the i18n stuff than passing through the Activity? maybe wrap Activity with an Internationalization.getString interface or something
-    public LoginView(Activity activity, EditText mEmailView, EditText mPasswordView, View mLoginFormView, View mLoginStatusView, TextView mLoginStatusMessageView, View mSignInButtonView, TextView mErrorView) {
+    public LoginView(Activity activity, EditText mEmailView, EditText mPasswordView, View mLoginFormView, View mLoginStatusView, TextView mLoginStatusMessageView, View mSignInButtonView) {
         this.mActivity = activity;
         this.mEmailView = mEmailView;
         this.mPasswordView = mPasswordView;
@@ -28,7 +27,6 @@ public class LoginView implements ILoginView {
         this.mLoginStatusView = mLoginStatusView;
         this.mLoginStatusMessageView = mLoginStatusMessageView;
         this.mSignInButtonView = mSignInButtonView;
-        this.mErrorView = mErrorView;
     }
 
     @Override

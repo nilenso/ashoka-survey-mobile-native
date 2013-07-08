@@ -39,11 +39,11 @@
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
 
-            <TextView
+            <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/errorView" android:layout_gravity="center" android:textColor="#7f0100"
-                    android:text="Foo!" android:visibility="invisible"/>
+                    android:id="@+id/imageView" android:layout_gravity="center" android:src="@drawable/login_icon"
+                    android:focusable="true"/>
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
