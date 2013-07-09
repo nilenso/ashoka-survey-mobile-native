@@ -16,11 +16,6 @@ public class SurveyWebHttpClient {
         this.client = new AsyncHttpClient();
     }
 
-    public void makeAllOperationsSynchronous() {
-        // Set a custom thread pool so that threaded operations occur synchronously while testing.
-        client.setThreadPool(new TestExecutorService(1, 1, 1, TimeUnit.SECONDS, new ArrayBlockingQueue(5)));
-    }
-
     public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(new SurveyWebURI(url).getAbsoluteUrl(), params, responseHandler);
     }
