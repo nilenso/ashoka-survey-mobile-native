@@ -28,6 +28,11 @@ public class LoginView implements ILoginView {
     }
 
     @Override
+    public void showTimeoutError() {
+        new SimpleDialogPresenter(new SimpleDialogView(mActivity, mActivity.getString(R.string.login_failed_alert_title), mActivity.getString(R.string.login_timed_out_alert_message))).show();
+    }
+
+    @Override
     public void reset() {
         mEmailView.setError(null);
         mPasswordView.setError(null);

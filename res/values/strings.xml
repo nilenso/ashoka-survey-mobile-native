@@ -5,5 +5,6 @@
     <string name="title_survey_detail">Survey Detail</string>
     <string name="login_failed_alert_title">Login failed!</string>
     <string name="login_failed_alert_message">Please check your username and password</string>
+    <string name="login_timed_out_alert_message">Unable to connect to the server. Please try again.</string>
 
 </resources>

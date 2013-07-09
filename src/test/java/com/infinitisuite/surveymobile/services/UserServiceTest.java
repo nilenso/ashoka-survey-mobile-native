@@ -6,10 +6,10 @@ import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.client.HttpResponseException;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.mockito.Mockito.*;
@@ -31,7 +31,6 @@ public class UserServiceTest {
         User user = new User("foo@bar.com", "bar");
         new UserService(client).login(user, userLoginHandler);
         verify(userLoginHandler, times(1)).notifySuccess();
-        verify(userLoginHandler, never()).notifyError("Error");
     }
 
     @Test
@@ -41,32 +40,45 @@ public class UserServiceTest {
         UserLoginHandler userLoginHandler = mock(UserLoginHandler.class);
         new UserService(client).login(user, userLoginHandler);
         verify(userLoginHandler, times(1)).notifyError("Unauthorized");
-        verify(userLoginHandler, never()).notifySuccess();
     }
 
     @Test
     public void notify_timeout_if_the_network_call_times_out() throws Exception {
-        // TODO: make this test pass. :)
+        client.setTimeout();
+        User user = new User("foo@bar.com", "bar");
+        UserLoginHandler userLoginHandler = mock(UserLoginHandler.class);
+        new UserService(client).login(user, userLoginHandler);
+        verify(userLoginHandler, times(1)).notifyTimeout("Timed out");
     }
 
+    private enum SurveyWebHttpClientStubResponseStatus { SUCCESS, FAILURE, TIMEOUT };
     private class SurveyWebHttpClientStub extends SurveyWebHttpClient {
-        private boolean isSuccess;
+        private SurveyWebHttpClientStubResponseStatus responseStatus;
 
         public void setSuccess() {
-            isSuccess = true;
+            responseStatus = SurveyWebHttpClientStubResponseStatus.SUCCESS;
         }
 
         public void setFailure() {
-            isSuccess = false;
+            responseStatus = SurveyWebHttpClientStubResponseStatus.FAILURE;
+        }
+
+        public void setTimeout() {
+            responseStatus = SurveyWebHttpClientStubResponseStatus.TIMEOUT;
         }
 
         @Override
         public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-            if (isSuccess) {
-                responseHandler.onSuccess("Success!");
-            }
-            else {
-                responseHandler.onFailure(new HttpResponseException(401, "Unauthorized"), "Unauthorized");
+            switch (responseStatus) {
+                case SUCCESS:
+                    responseHandler.onSuccess("Success!");
+                    break;
+                case FAILURE:
+                    responseHandler.onFailure(new HttpResponseException(401, "Unauthorized"), "Unauthorized");
+                    break;
+                case TIMEOUT:
+                    responseHandler.onFailure(new ConnectTimeoutException(), "Timed out");
+                    break;
             }
         }
     }

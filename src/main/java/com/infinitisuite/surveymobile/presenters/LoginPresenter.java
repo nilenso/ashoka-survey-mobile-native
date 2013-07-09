@@ -42,6 +42,12 @@ public class LoginPresenter {
                 loginView.hideSigningIn();
                 loginView.showLoginError();
             }
+
+            @Override
+            public void notifyTimeout(String s) {
+                loginView.hideSigningIn();
+                loginView.showTimeoutError();
+            }
         });
     }
 

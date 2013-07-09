@@ -85,24 +85,53 @@ public class LoginPresenterTest {
         verify(loginViewMock, times(1)).hideSigningIn();
     }
 
+    @Test
+    public void hides_spinner_if_login_times_out() throws Exception {
+        userService.setTimeout();
+        doReturn("foo@bar.com").when(loginViewMock).getEmail();
+        doReturn("bar").when(loginViewMock).getPassword();
+        presenter.attemptLogin();
+        verify(loginViewMock, times(1)).hideSigningIn();
+    }
+
+    @Test
+    public void shows_timeout_error_when_network_call_times_out() throws Exception {
+        userService.setTimeout();
+        doReturn("foo@bar.com").when(loginViewMock).getEmail();
+        doReturn("foo").when(loginViewMock).getPassword();
+        presenter.attemptLogin();
+        verify(loginViewMock, times(1)).showTimeoutError();
+
+    }
+
+    public enum UserServiceStubHttpResponse { SUCCESS, FAILURE, TIMEOUT }
     private class UserServiceStub implements IUserService {
-        private boolean isSuccess;
+        private UserServiceStubHttpResponse httpResponse;
 
         public void setSuccess() {
-            isSuccess = true;
+            httpResponse = UserServiceStubHttpResponse.SUCCESS;
         }
 
         public void setFailure() {
-            isSuccess = false;
+            httpResponse = UserServiceStubHttpResponse.FAILURE;
+        }
+
+        public void setTimeout() {
+            httpResponse = UserServiceStubHttpResponse.TIMEOUT;
         }
 
         @Override
         public void login(User user, UserLoginHandler userLoginHandler) {
-            if (isSuccess) {
-                userLoginHandler.notifySuccess();
-            }
-            else {
-                userLoginHandler.notifyError("Error!");
+            switch (httpResponse) {
+                case SUCCESS:
+                    userLoginHandler.notifySuccess();
+                    break;
+                case FAILURE:
+                    userLoginHandler.notifyError("Error!");
+                    break;
+                case TIMEOUT:
+                    userLoginHandler.notifyTimeout("Timeout");
+                    break;
             }
         }
     }
