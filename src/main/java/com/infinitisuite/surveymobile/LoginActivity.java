@@ -4,13 +4,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import com.google.inject.Inject;
 import com.infinitisuite.surveymobile.presenters.LoginPresenter;
-import com.infinitisuite.surveymobile.services.UserService;
-import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
-import com.infinitisuite.surveymobile.views.LoginView;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
@@ -20,13 +15,15 @@ import roboguice.inject.InjectView;
  */
 public class LoginActivity extends RoboActivity {
 
-    //@Inject LoginPresenter mPresenter;
+    @Inject LoginPresenter mPresenter;
     @InjectView(R.id.sign_in_button) Button mSignInButtonView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mPresenter.onCreate();
+
         mSignInButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

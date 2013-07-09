@@ -1,26 +1,31 @@
 package com.infinitisuite.surveymobile.views;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.infinitisuite.surveymobile.R;
 import com.infinitisuite.surveymobile.presenters.SimpleDialogPresenter;
 import com.infinitisuite.surveymobile.presenters.SimpleDialogView;
-import roboguice.inject.InjectView;
 
 public class LoginView implements ILoginView {
-    @Inject protected static Provider<Context> contextProvider;
-    protected Context context = contextProvider.get();
 
-    @InjectView(R.id.email) EditText mEmailView;
-    @InjectView(R.id.password) EditText mPasswordView;
-    @InjectView(R.id.login_form) View mLoginFormView;
-    @InjectView(R.id.login_status) View mLoginStatusView;
-    @InjectView(R.id.login_status_message) TextView mLoginStatusMessageView;
+    private TextView mLoginStatusMessageView;
+    private View mLoginStatusView;
+    private View mLoginFormView;
+    private EditText mPasswordView;
+    private EditText mEmailView;
+
+    @Inject protected Activity mActivity;
+
+    public void onCreate() {
+        mEmailView = (EditText) mActivity.findViewById(R.id.email);
+        mPasswordView = (EditText) mActivity.findViewById(R.id.password);
+        mLoginFormView = mActivity.findViewById(R.id.login_form);
+        mLoginStatusView = mActivity.findViewById(R.id.login_status);
+        mLoginStatusMessageView = (TextView) mActivity.findViewById(R.id.login_status_message);
+    }
 
     @Override
     public void reset() {
@@ -40,19 +45,19 @@ public class LoginView implements ILoginView {
 
     @Override
     public void setPasswordRequiredError() {
-        mPasswordView.setError(context.getString(R.string.error_field_required));
+        mPasswordView.setError(mActivity.getString(R.string.error_field_required));
         mPasswordView.requestFocus();
     }
 
     @Override
     public void setEmailRequiredError() {
-        mEmailView.setError(context.getString(R.string.error_field_required));
+        mEmailView.setError(mActivity.getString(R.string.error_field_required));
         mEmailView.requestFocus();
     }
 
     @Override
     public void setEmailInvalidError() {
-        mEmailView.setError(context.getString(R.string.error_invalid_email));
+        mEmailView.setError(mActivity.getString(R.string.error_invalid_email));
         mEmailView.requestFocus();
     }
 
@@ -71,6 +76,6 @@ public class LoginView implements ILoginView {
 
     @Override
     public void showLoginError() {
-        new SimpleDialogPresenter(new SimpleDialogView(context, context.getString(R.string.login_failed_alert_title), context.getString(R.string.login_failed_alert_message))).show();
+        new SimpleDialogPresenter(new SimpleDialogView(mActivity, mActivity.getString(R.string.login_failed_alert_title), mActivity.getString(R.string.login_failed_alert_message))).show();
     }
 }

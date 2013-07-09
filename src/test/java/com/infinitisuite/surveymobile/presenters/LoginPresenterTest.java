@@ -1,7 +1,5 @@
 package com.infinitisuite.surveymobile.presenters;
 
-import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
-import com.infinitisuite.surveymobile.models.User;
 import com.infinitisuite.surveymobile.services.IUserService;
 import com.infinitisuite.surveymobile.services.UserService;
 import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
@@ -27,7 +25,7 @@ public class LoginPresenterTest {
         SurveyWebHttpClient client = new SurveyWebHttpClient();
         client.makeAllOperationsSynchronous();
         userService = new UserService(client);
-        //presenter = new LoginPresenter(userService, loginViewMock);
+        presenter = new LoginPresenter(userService, loginViewMock);
     }
 
     @Test

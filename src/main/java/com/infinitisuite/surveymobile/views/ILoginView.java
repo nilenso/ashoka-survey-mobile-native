@@ -13,4 +13,5 @@ public interface ILoginView {
     void showSigningIn();
     void hideSigningIn();
     void showLoginError();
+    void onCreate();
 }

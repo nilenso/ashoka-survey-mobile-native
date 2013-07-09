@@ -14,9 +14,13 @@ public class LoginPresenter {
     private ILoginView loginView;
 
     @Inject
-    public LoginPresenter(UserService userService, LoginView loginView) {
+    public LoginPresenter(IUserService userService, ILoginView loginView) {
         this.userService = userService;
         this.loginView = loginView;
+    }
+
+    public void onCreate() {
+        this.loginView.onCreate();
     }
 
     public void attemptLogin() {
