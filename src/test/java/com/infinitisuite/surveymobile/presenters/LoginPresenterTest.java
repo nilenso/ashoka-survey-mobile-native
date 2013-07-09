@@ -130,7 +130,7 @@ public class LoginPresenterTest {
                     userLoginHandler.notifyError("Error!");
                     break;
                 case TIMEOUT:
-                    userLoginHandler.notifyTimeout("Timeout");
+                    userLoginHandler.notifyServerUnreachable("Timeout");
                     break;
             }
         }

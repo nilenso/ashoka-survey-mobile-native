@@ -7,7 +7,6 @@ import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.client.HttpResponseException;
-import org.apache.http.conn.ConnectTimeoutException;
 
 public class UserService implements IUserService {
 
@@ -32,11 +31,11 @@ public class UserService implements IUserService {
 
             @Override
             public void onFailure(Throwable throwable, String s) {
-                if (throwable.getClass().equals(ConnectTimeoutException.class)){
-                    userLoginHandler.notifyTimeout(s);
+                if (throwable.getClass().equals(HttpResponseException.class)){
+                    userLoginHandler.notifyError(s);
                 }
                 else {
-                    userLoginHandler.notifyError(s);
+                    userLoginHandler.notifyServerUnreachable(s);
                 }
             }
         });

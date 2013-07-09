@@ -44,7 +44,7 @@ public class LoginPresenter {
             }
 
             @Override
-            public void notifyTimeout(String s) {
+            public void notifyServerUnreachable(String s) {
                 loginView.hideSigningIn();
                 loginView.showTimeoutError();
             }

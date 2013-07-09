@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.net.UnknownHostException;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -26,7 +28,7 @@ public class UserServiceTest {
 
     @Test
     public void notify_success_if_the_email_and_password_are_correct() {
-        client.setSuccess();
+        client.setResponseStatus(SurveyWebHttpClientStubResponseStatus.SUCCESS);
         UserLoginHandler userLoginHandler = mock(UserLoginHandler.class);
         User user = new User("foo@bar.com", "bar");
         new UserService(client).login(user, userLoginHandler);
@@ -35,36 +37,37 @@ public class UserServiceTest {
 
     @Test
     public void notify_error_if_email_or_password_is_wrong() {
-        client.setFailure();
+        client.setResponseStatus(SurveyWebHttpClientStubResponseStatus.FAILURE);
         User user = new User("wrong@example.com", "wrong!");
         UserLoginHandler userLoginHandler = mock(UserLoginHandler.class);
         new UserService(client).login(user, userLoginHandler);
-        verify(userLoginHandler, times(1)).notifyError("Unauthorized");
+        verify(userLoginHandler, times(1)).notifyError(anyString());
     }
 
     @Test
-    public void notify_timeout_if_the_network_call_times_out() throws Exception {
-        client.setTimeout();
+    public void notify_server_unreachable_if_the_network_call_times_out() throws Exception {
+        client.setResponseStatus(SurveyWebHttpClientStubResponseStatus.TIMEOUT);
         User user = new User("foo@bar.com", "bar");
         UserLoginHandler userLoginHandler = mock(UserLoginHandler.class);
         new UserService(client).login(user, userLoginHandler);
-        verify(userLoginHandler, times(1)).notifyTimeout("Timed out");
+        verify(userLoginHandler, times(1)).notifyServerUnreachable(anyString());
     }
 
-    private enum SurveyWebHttpClientStubResponseStatus { SUCCESS, FAILURE, TIMEOUT };
+    @Test
+    public void notify_server_unreachable_if_the_host_is_unknown() throws Exception {
+        client.setResponseStatus(SurveyWebHttpClientStubResponseStatus.HOST_NOT_FOUND);
+        User user = new User("foo@bar.com", "bar");
+        UserLoginHandler userLoginHandler = mock(UserLoginHandler.class);
+        new UserService(client).login(user, userLoginHandler);
+        verify(userLoginHandler, times(1)).notifyServerUnreachable(anyString());
+    }
+
+    private enum SurveyWebHttpClientStubResponseStatus { SUCCESS, FAILURE, TIMEOUT, HOST_NOT_FOUND };
     private class SurveyWebHttpClientStub extends SurveyWebHttpClient {
         private SurveyWebHttpClientStubResponseStatus responseStatus;
 
-        public void setSuccess() {
-            responseStatus = SurveyWebHttpClientStubResponseStatus.SUCCESS;
-        }
-
-        public void setFailure() {
-            responseStatus = SurveyWebHttpClientStubResponseStatus.FAILURE;
-        }
-
-        public void setTimeout() {
-            responseStatus = SurveyWebHttpClientStubResponseStatus.TIMEOUT;
+        private void setResponseStatus(SurveyWebHttpClientStubResponseStatus responseStatus) {
+            this.responseStatus = responseStatus;
         }
 
         @Override
@@ -78,6 +81,9 @@ public class UserServiceTest {
                     break;
                 case TIMEOUT:
                     responseHandler.onFailure(new ConnectTimeoutException(), "Timed out");
+                    break;
+                case HOST_NOT_FOUND:
+                    responseHandler.onFailure(new UnknownHostException(), "Unknown Host");
                     break;
             }
         }
