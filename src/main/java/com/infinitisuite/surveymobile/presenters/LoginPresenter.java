@@ -1,16 +1,20 @@
 package com.infinitisuite.surveymobile.presenters;
 
 import android.text.TextUtils;
+import com.google.inject.Inject;
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
 import com.infinitisuite.surveymobile.models.User;
 import com.infinitisuite.surveymobile.services.IUserService;
+import com.infinitisuite.surveymobile.services.UserService;
 import com.infinitisuite.surveymobile.views.ILoginView;
+import com.infinitisuite.surveymobile.views.LoginView;
 
 public class LoginPresenter {
     private IUserService userService;
     private ILoginView loginView;
 
-    public LoginPresenter(IUserService userService, ILoginView loginView) {
+    @Inject
+    public LoginPresenter(UserService userService, LoginView loginView) {
         this.userService = userService;
         this.loginView = loginView;
     }

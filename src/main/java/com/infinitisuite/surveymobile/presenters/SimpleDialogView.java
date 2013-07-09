@@ -3,15 +3,16 @@ package com.infinitisuite.surveymobile.presenters;
 import android.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 
 public class SimpleDialogView implements ISimpleDialogView {
 
-    private Activity mActivity;
+    private Context mActivity;
     private String mTitle;
     private String mMessage;
 
-    public SimpleDialogView(Activity mActivity, String heading, String message) {
+    public SimpleDialogView(Context mActivity, String heading, String message) {
         this.mActivity = mActivity;
         this.mTitle = heading;
         this.mMessage = message;

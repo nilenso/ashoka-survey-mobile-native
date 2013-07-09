@@ -27,7 +27,7 @@ public class LoginPresenterTest {
         SurveyWebHttpClient client = new SurveyWebHttpClient();
         client.makeAllOperationsSynchronous();
         userService = new UserService(client);
-        presenter = new LoginPresenter(userService, loginViewMock);
+        //presenter = new LoginPresenter(userService, loginViewMock);
     }
 
     @Test

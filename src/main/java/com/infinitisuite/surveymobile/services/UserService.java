@@ -9,9 +9,9 @@ import com.loopj.android.http.RequestParams;
 
 public class UserService implements IUserService {
 
-    // TODO: switch to @Inject
     private SurveyWebHttpClient client;
 
+    @Inject
     public UserService(SurveyWebHttpClient client) {
         this.client = client;
     }

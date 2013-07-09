@@ -1,33 +1,26 @@
 package com.infinitisuite.surveymobile.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.infinitisuite.surveymobile.R;
 import com.infinitisuite.surveymobile.presenters.SimpleDialogPresenter;
 import com.infinitisuite.surveymobile.presenters.SimpleDialogView;
+import roboguice.inject.InjectView;
 
 public class LoginView implements ILoginView {
+    @Inject protected static Provider<Context> contextProvider;
+    protected Context context = contextProvider.get();
 
-    private Activity mActivity;
-    private final EditText mEmailView;
-    private final EditText mPasswordView;
-    private final View mLoginFormView;
-    private final View mLoginStatusView;
-    private final TextView mLoginStatusMessageView;
-    private final View mSignInButtonView;
-
-    // TODO: is there a better way of dealing with the i18n stuff than passing through the Activity? maybe wrap Activity with an Internationalization.getString interface or something
-    public LoginView(Activity activity, EditText mEmailView, EditText mPasswordView, View mLoginFormView, View mLoginStatusView, TextView mLoginStatusMessageView, View mSignInButtonView) {
-        this.mActivity = activity;
-        this.mEmailView = mEmailView;
-        this.mPasswordView = mPasswordView;
-        this.mLoginFormView = mLoginFormView;
-        this.mLoginStatusView = mLoginStatusView;
-        this.mLoginStatusMessageView = mLoginStatusMessageView;
-        this.mSignInButtonView = mSignInButtonView;
-    }
+    @InjectView(R.id.email) EditText mEmailView;
+    @InjectView(R.id.password) EditText mPasswordView;
+    @InjectView(R.id.login_form) View mLoginFormView;
+    @InjectView(R.id.login_status) View mLoginStatusView;
+    @InjectView(R.id.login_status_message) TextView mLoginStatusMessageView;
 
     @Override
     public void reset() {
@@ -47,19 +40,19 @@ public class LoginView implements ILoginView {
 
     @Override
     public void setPasswordRequiredError() {
-        mPasswordView.setError(mActivity.getString(R.string.error_field_required));
+        mPasswordView.setError(context.getString(R.string.error_field_required));
         mPasswordView.requestFocus();
     }
 
     @Override
     public void setEmailRequiredError() {
-        mEmailView.setError(mActivity.getString(R.string.error_field_required));
+        mEmailView.setError(context.getString(R.string.error_field_required));
         mEmailView.requestFocus();
     }
 
     @Override
     public void setEmailInvalidError() {
-        mEmailView.setError(mActivity.getString(R.string.error_invalid_email));
+        mEmailView.setError(context.getString(R.string.error_invalid_email));
         mEmailView.requestFocus();
     }
 
@@ -78,6 +71,6 @@ public class LoginView implements ILoginView {
 
     @Override
     public void showLoginError() {
-        new SimpleDialogPresenter(new SimpleDialogView(mActivity, mActivity.getString(R.string.login_failed_alert_title), mActivity.getString(R.string.login_failed_alert_message))).show();
+        new SimpleDialogPresenter(new SimpleDialogView(context, context.getString(R.string.login_failed_alert_title), context.getString(R.string.login_failed_alert_message))).show();
     }
 }
