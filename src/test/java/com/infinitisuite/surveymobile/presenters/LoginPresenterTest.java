@@ -3,15 +3,10 @@ package com.infinitisuite.surveymobile.presenters;
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
 import com.infinitisuite.surveymobile.models.User;
 import com.infinitisuite.surveymobile.services.IUserService;
-import com.infinitisuite.surveymobile.services.UserService;
-import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
 import com.infinitisuite.surveymobile.views.ILoginView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.mockito.Mockito.*;

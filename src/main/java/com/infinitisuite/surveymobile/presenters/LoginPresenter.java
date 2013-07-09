@@ -5,9 +5,7 @@ import com.google.inject.Inject;
 import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
 import com.infinitisuite.surveymobile.models.User;
 import com.infinitisuite.surveymobile.services.IUserService;
-import com.infinitisuite.surveymobile.services.UserService;
 import com.infinitisuite.surveymobile.views.ILoginView;
-import com.infinitisuite.surveymobile.views.LoginView;
 
 public class LoginPresenter {
     private IUserService userService;

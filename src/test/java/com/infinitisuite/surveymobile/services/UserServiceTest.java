@@ -44,10 +44,6 @@ public class UserServiceTest {
 
     @Test
     public void notify_timeout_if_the_network_call_times_out() throws Exception {
-        // TODO: UserService injection to use @Inject -- how to inject mocks with Guice?
-        // TODO: LoginPresenter injection to use @Inject -- ditto.
-        // TODO: extract SurveyWebUri from SurveyWebHttpClient and kill SWHC
-        // TODO: mock IUserService interactions -- manual stub? or doAnswer?
         // TODO: make this test pass. :)
     }
 }
