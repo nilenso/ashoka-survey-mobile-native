@@ -1,5 +1,7 @@
 package com.infinitisuite.surveymobile.presenters;
 
+import com.infinitisuite.surveymobile.handlers.UserLoginHandler;
+import com.infinitisuite.surveymobile.models.User;
 import com.infinitisuite.surveymobile.services.IUserService;
 import com.infinitisuite.surveymobile.services.UserService;
 import com.infinitisuite.surveymobile.util.SurveyWebHttpClient;
@@ -7,6 +9,8 @@ import com.infinitisuite.surveymobile.views.ILoginView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
@@ -17,14 +21,12 @@ public class LoginPresenterTest {
 
     private LoginPresenter presenter;
     private ILoginView loginViewMock;
-    private IUserService userService;
+    private UserServiceStub userService;
 
     @Before
     public void setUp() throws Exception {
         loginViewMock = mock(ILoginView.class);
-        SurveyWebHttpClient client = new SurveyWebHttpClient();
-        client.makeAllOperationsSynchronous();
-        userService = new UserService(client);
+        userService = new UserServiceStub();
         presenter = new LoginPresenter(userService, loginViewMock);
     }
 
@@ -54,7 +56,7 @@ public class LoginPresenterTest {
 
     @Test
     public void shows_error_message_if_username_and_password_are_wrong() throws Exception {
-        Robolectric.addPendingHttpResponse(401, "Unauthorized");
+        userService.setFailure();
         doReturn("foo@bar.com").when(loginViewMock).getEmail();
         doReturn("bar").when(loginViewMock).getPassword();
         presenter.attemptLogin();
@@ -63,7 +65,7 @@ public class LoginPresenterTest {
 
     @Test
     public void shows_spinner_while_logging_in_if_username_and_password_are_valid() throws Exception {
-        Robolectric.addPendingHttpResponse(200, "OK");
+        userService.setSuccess();
         doReturn("foo@bar.com").when(loginViewMock).getEmail();
         doReturn("bar").when(loginViewMock).getPassword();
         presenter.attemptLogin();
@@ -72,7 +74,7 @@ public class LoginPresenterTest {
 
     @Test
     public void hides_spinner_if_login_is_successful() throws Exception {
-        Robolectric.addPendingHttpResponse(200, "OK");
+        userService.setSuccess();
         doReturn("foo@bar.com").when(loginViewMock).getEmail();
         doReturn("bar").when(loginViewMock).getPassword();
         presenter.attemptLogin();
@@ -81,10 +83,32 @@ public class LoginPresenterTest {
 
     @Test
     public void hides_spinner_if_login_is_unsuccessful() throws Exception {
-        Robolectric.addPendingHttpResponse(401, "Unauthorized");
+        userService.setFailure();
         doReturn("foo@bar.com").when(loginViewMock).getEmail();
         doReturn("bar").when(loginViewMock).getPassword();
         presenter.attemptLogin();
         verify(loginViewMock, times(1)).hideSigningIn();
+    }
+
+    private class UserServiceStub implements IUserService {
+        private boolean isSuccess;
+
+        public void setSuccess() {
+            isSuccess = true;
+        }
+
+        public void setFailure() {
+            isSuccess = false;
+        }
+
+        @Override
+        public void login(User user, UserLoginHandler userLoginHandler) {
+            if (isSuccess) {
+                userLoginHandler.notifySuccess();
+            }
+            else {
+                userLoginHandler.notifyError("Error!");
+            }
+        }
     }
 }
