@@ -80,6 +80,11 @@ public class LoginView implements ILoginView {
     }
 
     @Override
+    public void showLoginSuccess() {
+        new SimpleDialogPresenter(new SimpleDialogView(mActivity, mActivity.getString(R.string.login_success_alert_title), mActivity.getString(R.string.login_success_alert_message))).show();
+    }
+
+    @Override
     public void showLoginError() {
         new SimpleDialogPresenter(new SimpleDialogView(mActivity, mActivity.getString(R.string.login_failed_alert_title), mActivity.getString(R.string.login_failed_alert_message))).show();
     }

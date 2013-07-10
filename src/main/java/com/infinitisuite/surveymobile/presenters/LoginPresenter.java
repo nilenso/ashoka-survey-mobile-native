@@ -35,6 +35,7 @@ public class LoginPresenter {
             @Override
             public void notifySuccess() {
                 loginView.hideSigningIn();
+                loginView.showLoginSuccess();
             }
 
             @Override

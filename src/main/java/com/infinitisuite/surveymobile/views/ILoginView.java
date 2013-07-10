@@ -12,8 +12,11 @@ public interface ILoginView {
 
     void showSigningIn();
     void hideSigningIn();
+
+    void showLoginSuccess();
     void showLoginError();
     void showTimeoutError();
 
     void onCreate();
+
 }

@@ -68,6 +68,15 @@ public class LoginPresenterTest {
     }
 
     @Test
+    public void shows_success_message_if_login_is_successful() throws Exception {
+        userService.setSuccess();
+        doReturn("foo@bar.com").when(loginViewMock).getEmail();
+        doReturn("bar").when(loginViewMock).getPassword();
+        presenter.attemptLogin();
+        verify(loginViewMock, times(1)).showLoginSuccess();
+    }
+
+    @Test
     public void hides_spinner_if_login_is_successful() throws Exception {
         userService.setSuccess();
         doReturn("foo@bar.com").when(loginViewMock).getEmail();
