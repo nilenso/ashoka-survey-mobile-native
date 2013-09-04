@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.google.inject.Inject;
 import com.infinitisuite.surveymobile.R;
 import com.infinitisuite.surveymobile.presenters.SimpleDialogPresenter;
-import com.infinitisuite.surveymobile.presenters.SimpleDialogView;
 
 public class LoginView implements ILoginView {
 

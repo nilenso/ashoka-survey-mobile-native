@@ -1,4 +1,4 @@
-package com.infinitisuite.surveymobile.presenters;
+package com.infinitisuite.surveymobile.views;
 
 import android.R;
 import android.app.AlertDialog;
